@@ -7,6 +7,7 @@ class Header extends React.Component {
   constructor() {
     super();
     this.state = {
+      isLoading: false,
       user: '',
     };
   }
@@ -15,21 +16,26 @@ class Header extends React.Component {
     this.mostraNome();
   }
 
-  mostraNome = async () => {
-    this.setState(
-      { user: await getUser() },
-    );
+  mostraNome = () => {
+    this.setState({ isLoading: true },
+      async () => {
+        this.setState({ user: await getUser() }, () => {
+          this.setState({ isLoading: false });
+        });
+      });
   }
 
   render() {
-    const { user } = this.state;
+    const { user, isLoading } = this.state;
     return (
 
       <div data-testid="header-component">
-        <p data-testid="header-user-name">{ user.name || <Loading />}</p>
+        {isLoading && <Loading />}
+        <p data-testid="header-user-name">{ user.name }</p>
         <Link to="/search" data-testid="link-to-search">Pesquisa</Link>
         <Link to="/favorites" data-testid="link-to-favorites">Músicas Favoritas</Link>
         <Link to="/profile" data-testid="link-to-profile">Perfil</Link>
+
       </div>
     );
   }
