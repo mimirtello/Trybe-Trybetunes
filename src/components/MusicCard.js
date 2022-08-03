@@ -8,9 +8,15 @@ class MusicCard extends React.Component {
     super();
     this.state = {
       isFavorite: false,
-      isLoading: false,
+      isLoading: true,
       favorito: [],
     };
+  }
+
+  componentDidMount() {
+    const { favoritoMusica, id } = this.props;
+    const musicaFavorite = favoritoMusica.some((musica) => musica === id);
+    this.setState({ isFavorite: musicaFavorite, isLoading: false });
   }
 
   saveSong = async () => {
@@ -32,9 +38,9 @@ class MusicCard extends React.Component {
   render() {
     const { previewUrl, id } = this.props;
     const { isFavorite, isLoading } = this.state;
-    // const pegaOId = response.find(({ track }) => track === trackId);
     return (
       <div>
+
         {isLoading && <Loading />}
 
         <audio
@@ -72,6 +78,8 @@ class MusicCard extends React.Component {
 MusicCard.propTypes = {
   previewUrl: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
+  favoritoMusica: PropTypes.arrayOf({}).isRequired,
+
   // trackId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 
 };

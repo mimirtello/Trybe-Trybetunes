@@ -3,29 +3,35 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 import MusicCard from '../components/MusicCard';
+import { getFavoriteSongs } from '../services/favoriteSongsAPI';
+import Loading from './Loading';
 
 class Album extends React.Component {
+  // pegaOId = favoritas.find(({ fav }) => fav === id);
+
   constructor() {
     super();
     this.state = {
       album: [],
       isLoading: false,
+      fav: [],
     };
   }
 
   async componentDidMount() {
     const { match: { params: { id } } } = this.props;
     const response = await getMusics(id);
-    this.setState({ album: response, isLoading: true });
+    const favoritas = await getFavoriteSongs(id);
+    this.setState({ album: response, isLoading: true, fav: favoritas });
   }
 
   render() {
-    const { album, isLoading } = this.state;
+    const { album, isLoading, fav } = this.state;
     return (
 
       <div data-testid="page-album">
         <Header />
-
+        {!isLoading && <Loading />}
         <p data-testid="artist-name">{isLoading && album[0].artistName}</p>
         <p data-testid="album-name">{isLoading && album[0].collectionName}</p>
         {isLoading && album.map((elemento, index) => (
@@ -35,6 +41,7 @@ class Album extends React.Component {
               <MusicCard
                 previewUrl={ elemento.previewUrl }
                 id={ elemento.trackId }
+                favoritoMusica={ fav }
               />)}
           </div>
         ))}
