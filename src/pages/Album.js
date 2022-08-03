@@ -17,7 +17,6 @@ class Album extends React.Component {
     const { match: { params: { id } } } = this.props;
     const response = await getMusics(id);
     this.setState({ album: response, isLoading: true });
-    console.log(response);
   }
 
   render() {
@@ -27,20 +26,18 @@ class Album extends React.Component {
       <div data-testid="page-album">
         <Header />
 
-        <div>
-          <p data-testid="artist-name">{isLoading && album[0].artistName}</p>
-          <p data-testid="album-name">{isLoading && album[0].collectionName}</p>
-          {isLoading && album.map((elemento) => (
-            <div key={ elemento.trackId }>
-              <p>{elemento.trackName }</p>
-              {elemento.kind === 'song' && (
-                <MusicCard
-                  previewUrl={ elemento.previewUrl }
-                />)}
-            </div>
-          ))}
-
-        </div>
+        <p data-testid="artist-name">{isLoading && album[0].artistName}</p>
+        <p data-testid="album-name">{isLoading && album[0].collectionName}</p>
+        {isLoading && album.map((elemento, index) => (
+          <div key={ index }>
+            <p>{elemento.trackName }</p>
+            {elemento.kind === 'song' && (
+              <MusicCard
+                previewUrl={ elemento.previewUrl }
+                id={ elemento.trackId }
+              />)}
+          </div>
+        ))}
 
       </div>
 
