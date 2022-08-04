@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, removeSong } from '../services/favoriteSongsAPI';
 import Loading from '../pages/Loading';
 
 class MusicCard extends React.Component {
@@ -20,21 +20,34 @@ class MusicCard extends React.Component {
     this.setState({ isFavorite: musicaFavorite, isLoading: false });
   }
 
+   removeMusica = async () => {
+     const { id, album } = this.props;
+     await removeSong(album);
+     this.setState({ isFavorite: false, isLoading: false }, () => {
+       this.setState((prevState) => ({ favorito: prevState.favorito
+         .filter((musica) => musica.trackId !== id) }));
+     });
+   };
+
   saveSong = async () => {
     const { id, album } = this.props;
     await addSong(album);
     this.setState({ isFavorite: true, isLoading: false }, () => {
       this.setState((prevState) => ({ favorito: [...prevState.favorito, id] }));
     });
-  }
+  };
 
   handleChange=({ target }) => {
     const { name } = target;
-    const value = target.type === 'checkbox' ? target.ckecked : target.value;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({ [name]: value }, () => {
       this.saveSong();
+      if (target.checked) {
+        this.removeMusica();
+      }
+      // if (target.checked === false) { this.removeMusica(); }
     });
-  }
+  };
 
   render() {
     const { previewUrl, id } = this.props;
@@ -79,7 +92,7 @@ class MusicCard extends React.Component {
 MusicCard.propTypes = {
   previewUrl: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
-  favoritoMusica: PropTypes.arrayOf({}).isRequired,
+  favoritoMusica: PropTypes.arrayOf({ }).isRequired,
   album: PropTypes.shape.isRequired,
 
   // trackId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
