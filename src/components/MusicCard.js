@@ -15,13 +15,14 @@ class MusicCard extends React.Component {
 
   componentDidMount() {
     const { favoritoMusica, id } = this.props;
-    const musicaFavorite = favoritoMusica.some((musica) => musica === id);
+    console.log(favoritoMusica)
+    const musicaFavorite = favoritoMusica.some((musica) => musica.trackId === id);
     this.setState({ isFavorite: musicaFavorite, isLoading: false });
   }
 
   saveSong = async () => {
-    const { id } = this.props;
-    await addSong(id);
+    const { id, album } = this.props;
+    await addSong(album);
     this.setState({ isFavorite: true, isLoading: false }, () => {
       this.setState((prevState) => ({ favorito: [...prevState.favorito, id] }));
     });
@@ -79,6 +80,7 @@ MusicCard.propTypes = {
   previewUrl: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   favoritoMusica: PropTypes.arrayOf({}).isRequired,
+  album: PropTypes.shape.isRequired,
 
   // trackId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 

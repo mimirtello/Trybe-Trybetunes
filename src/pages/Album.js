@@ -18,11 +18,13 @@ class Album extends React.Component {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     const { match: { params: { id } } } = this.props;
-    const response = await getMusics(id);
-    const favoritas = await getFavoriteSongs(id);
-    this.setState({ album: response, isLoading: true, fav: favoritas });
+    this.setState({ isLoading: false }, async () => {
+      const response = await getMusics(id);
+      const favoritas = await getFavoriteSongs();
+      this.setState({ album: response, isLoading: true, fav: favoritas });
+    });
   }
 
   render() {
@@ -42,6 +44,7 @@ class Album extends React.Component {
                 previewUrl={ elemento.previewUrl }
                 id={ elemento.trackId }
                 favoritoMusica={ fav }
+                album={ elemento }
               />)}
           </div>
         ))}
