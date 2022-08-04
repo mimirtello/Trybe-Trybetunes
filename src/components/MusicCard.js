@@ -15,7 +15,7 @@ class MusicCard extends React.Component {
 
   componentDidMount() {
     const { favoritoMusica, id } = this.props;
-    console.log(favoritoMusica)
+    console.log(favoritoMusica);
     const musicaFavorite = favoritoMusica.some((musica) => musica.trackId === id);
     this.setState({ isFavorite: musicaFavorite, isLoading: false });
   }
