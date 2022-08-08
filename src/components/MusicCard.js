@@ -15,7 +15,6 @@ class MusicCard extends React.Component {
 
   componentDidMount() {
     const { favoritoMusica, id } = this.props;
-    console.log(favoritoMusica);
     const musicaFavorite = favoritoMusica.some((musica) => musica.trackId === id);
     this.setState({ isFavorite: musicaFavorite, isLoading: false });
   }
@@ -39,12 +38,14 @@ class MusicCard extends React.Component {
 
   handleChange=({ target }) => {
     const { name } = target;
+    const { removeFavoritos } = this.props;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({ [name]: value }, () => {
       this.saveSong();
       if (target.checked) {
         this.removeMusica();
       }
+      removeFavoritos();
       // if (target.checked === false) { this.removeMusica(); }
     });
   };
@@ -80,7 +81,9 @@ class MusicCard extends React.Component {
             id={ id }
             checked={ isFavorite }
             onChange={ (event) => {
-              this.setState({ isLoading: true }, () => this.handleChange(event));
+              this.setState({ isLoading: true }, () => {
+                this.handleChange(event);
+              });
             } }
           />
         </label>
@@ -92,11 +95,17 @@ class MusicCard extends React.Component {
 MusicCard.propTypes = {
   previewUrl: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
-  favoritoMusica: PropTypes.arrayOf({ }).isRequired,
-  album: PropTypes.shape.isRequired,
+  favoritoMusica: PropTypes.arrayOf(PropTypes.shape({
+    trackId: PropTypes.number.isRequired,
+  })).isRequired,
+  album: PropTypes.shape({ trackid: PropTypes.number }).isRequired,
+  removeFavoritos: PropTypes.func,
 
   // trackId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 
+};
+MusicCard.defaultProps = {
+  removeFavoritos: () => {},
 };
 
 export default MusicCard;
