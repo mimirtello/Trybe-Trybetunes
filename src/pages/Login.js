@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createUser } from '../services/userAPI';
+import clave from '../clave-de-sol.png';
 import Loading from './Loading';
 
 class Login extends React.Component {
@@ -42,24 +43,32 @@ class Login extends React.Component {
     render() {
       const { isDisabled, isLoading, nameUser } = this.state;
       return (
-        <div data-testid="page-login">
-          {isLoading && <Loading /> }
-          <input
-            type="text"
-            name="nameUser"
-            data-testid="login-name-input"
-            onChange={ this.inputChange }
-            value={ nameUser }
-          />
-          <button
-            type="button"
-            data-testid="login-submit-button"
-            disabled={ isDisabled }
-            onClick={ this.createUserName }
-          >
-            Entrar
+        <div data-testid="page-login" className="caixa">
+          <div className="caixa-dentro">
+            {isLoading && <Loading /> }
+            <img
+              src={ clave }
+              alt="Login"
+            />
+            <input
+              type="text"
+              name="nameUser"
+              data-testid="login-name-input"
+              onChange={ this.inputChange }
+              value={ nameUser }
+              className="input-login"
+            />
+            <button
+              type="button"
+              data-testid="login-submit-button"
+              disabled={ isDisabled }
+              onClick={ this.createUserName }
+              className="btn-login"
+            >
+              <span className="entrar">Entrar</span>
 
-          </button>
+            </button>
+          </div>
         </div>
       );
     }

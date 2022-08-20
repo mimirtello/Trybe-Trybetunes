@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(54, 54, 54);
+  color:azure;
 }
 
 code {
@@ -16,4 +18,136 @@ code {
   align-items: center;
   display: flex;
   justify-content: center;
+}
+
+.caixa{
+  display:flex;
+  justify-content: center;
+  flex-direction: row;
+  background-color:rgb(143, 17, 216);
+  align-items: center;
+  width:300px;
+  height: 400px;
+  margin: auto;
+  border-radius: 20px;
+}
+
+.caixa-dentro{
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  
+}
+
+img{
+  display: flex;
+  margin:auto;
+  width:100px;
+  margin-bottom: 20px;
+}
+
+.btn-login{
+padding:10px;
+width:190px;
+display: flex;
+margin-top:30%;
+text-align: center;
+border-radius: 5px;
+border-color:azure;
+background-color: rgb(54, 54, 54);
+color:rgb(143, 17, 216);
+border-style: none;
+align-items: center;
+}
+
+.input-login{
+padding:15px;
+border-radius: 40px;
+border-style: none;
+display:flex;
+}
+
+.entrar{
+  display: flex;
+  margin: auto;
+  color: azure;
+}
+
+.title{
+  color:rgb(143, 17, 216);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 40px;
+  text-align: center;
+}
+
+.pesquisa{
+  margin: auto;
+}
+.topo{
+  display: flex;
+  flex-direction: row;
+}
+.input-pesquisa{
+  padding:20px;
+  width:80%;
+  margin-left:3%;
+}
+
+.btn-pesquisa{
+  padding: 20px;
+  width:10%;
+  margin-right:3%;
+}
+
+.artista{
+  display: flex;
+  margin: auto;
+  justify-content:space-around;
+}
+
+.links{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgb(26, 26, 26);
+  width:100%;
+  flex-direction: row;
+}
+
+.link-pesquisa,.link-musicas, .link-perfil{
+  display: flex;
+  padding:5px;
+  color:rgb(143, 17, 216);
+  text-decoration: none;
+}
+
+
+.link-pesquisa :hover{
+  color:white;
+}
+
+.user{
+  color:rgb(255, 255, 255);
+
+}
+.artista{
+  display: flex;
+  color:rgb(255, 255, 255);
+  margin: auto;
+  text-decoration: none;
+  flex-wrap: wrap;
+}
+.imagem-artista{
+  margin: auto;
+  
+}
+.albuns{
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  flex-wrap: wrap;
+  padding:50px;
+}
+h1{
+  color:white;
 }

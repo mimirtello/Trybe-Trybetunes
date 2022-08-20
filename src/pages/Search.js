@@ -49,14 +49,17 @@ class Search extends React.Component {
 
    return (
 
-     <div data-testid="page-search">
-       <Header />
+     <div data-testid="page-search" className="pesquisa">
+       <div className="topo">
+         <Header />
+       </div>
        <input
          type="text"
          name="nameArtist"
          data-testid="search-artist-input"
          onChange={ this.inputChange }
          value={ nameArtist }
+         className="input-pesquisa"
        />
 
        <button
@@ -64,11 +67,13 @@ class Search extends React.Component {
          data-testid="search-artist-button"
          disabled={ isDisabled }
          onClick={ this.pesquisa }
+         className="btn-pesquisa"
        >
          Pesquisar
 
        </button>
-       <div>
+
+       <div className="artista">
          {artist.length === 0 && <p>Nenhum álbum foi encontrado</p>}
          <p>{`Resultado de álbuns de: ${pesquisaDeArtista}`}</p>
          {artist.map((elemento) => (
@@ -77,12 +82,17 @@ class Search extends React.Component {
              key={ elemento.collectionId }
              data-testid={ `link-to-album-${elemento.collectionId}` }
            >
-             <p>{ elemento.artistName }</p>
-             <p>{ elemento.collectionName }</p>
-             <p>{ elemento.collectionPrice }</p>
-             <img src={ elemento.artworkUrl100 } alt="imagem" />
-             <p>{elemento.releaseDate}</p>
-
+             <div className="albuns">
+               <p className="artista">{ elemento.artistName }</p>
+               <p className="artista">{ elemento.collectionName }</p>
+               <p className="artista">{ elemento.collectionPrice }</p>
+               <img
+                 src={ elemento.artworkUrl100 }
+                 alt="imagem"
+                 className="imagem-artista"
+               />
+               <p className="artista">{elemento.releaseDate}</p>
+             </div>
            </Link>
          ))}
        </div>
